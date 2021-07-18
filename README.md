@@ -1,16 +1,20 @@
-# Route Planning Project
+# Build an OpenStreetMap Route Planner
 
-This repo contains the starter code for the Route Planning project.
+This project is a requisite for [Udacity](https://www.udacity.com)'s [C++ Developer Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213).
 
-<img src="map.png" width="600" height="450" />
+Besides the solution according to the problem statements, this repository contains some additional information that helps local development on a Linux platform using Micsrosoft VSCode editor, appropriately configured for CMAKE build and debbug.
+
+<img src="map_home.png" width="600" height="450" />
 
 ## Cloning
 
-When cloning this project, be sure to use the `--recurse-submodules` flag. Using HTTPS:
+When cloning this project, be sure to use the `--recurse-submodules` flag. Also consider clonning the original project repository idicated below.
+
+* Using HTTPS:
 ```
 git clone https://github.com/udacity/CppND-Route-Planning-Project.git --recurse-submodules
 ```
-or with SSH:
+* or with SSH:
 ```
 git clone git@github.com:udacity/CppND-Route-Planning-Project.git --recurse-submodules
 ```
@@ -28,7 +32,36 @@ git clone git@github.com:udacity/CppND-Route-Planning-Project.git --recurse-subm
   * Windows: recommend using [MinGW](http://www.mingw.org/)
 * IO2D
   * Installation instructions for all operating systems can be found [here](https://github.com/cpp-io2d/P0267_RefImpl/blob/master/BUILDING.md)
-  * This library must be built in a place where CMake `find_package` will be able to find it
+  * This library must be built in a place where CMake `find_package` will be able to find it (For that to work we need to install the package, as indicated in the following section)
+
+
+### Building IO2D in Linux
+
+After installing the dependences you can clone the IO2D code repo and build it. They didn't mention in the CMake example, after building the binaries, the need for intallation.
+
+Following I put the complete sequence:
+
+CMake script expects cairo and graphicsmagick to be installed. libpng is required in order to run tests.
+These installation steps assume APT package manager on Ubuntu Linux.
+Installation steps:
+1. Refresh apt: `sudo apt update`
+2. Install GCC: `sudo apt install build-essential`
+3. Install CMake: `sudo apt install cmake`
+4. Install Cairo: `sudo apt install libcairo2-dev`
+5. Install graphicsmagick: `sudo apt install libgraphicsmagick1-dev`
+6. Install libpng: `sudo apt install libpng-dev`
+
+Example of CMake execution:
+```
+git clone --recurse-submodules https://github.com/cpp-io2d/P0267_RefImpl
+cd P0267_RefImpl
+mkdir Debug
+cd Debug
+cmake --config Debug "-DCMAKE_BUILD_TYPE=Debug" ..
+cmake --build .
+cmake install
+```
+
 
 ## Compiling and Running
 
