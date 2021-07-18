@@ -55,25 +55,20 @@ int main(int argc, const char **argv)
     // TODO 1: Declare floats `start_x`, `start_y`, `end_x`, and `end_y` and get
     // user input for these values using std::cin. Pass the user input to the
     // RoutePlanner object below in place of 10, 10, 90, 90.
-    std::cout << "\nIndicate the coordinates to starting and ending points.\n";
 
-    float start_x;
-    std::cout << "Start x: ";
+    float start_x, start_y, end_x, end_y;
+    std::cout << "\nIndicate the coordinates to starting and goal points.\n";
+
+    std::cout << "Starting Point x coord: ";
     std::cin >> start_x;
-    // std::cout << "\n";
 
-    float start_y;
-    std::cout << "Start y: ";
+    std::cout << "Starting Point y coord: ";
     std::cin >> start_y;
-    // std::cout << "\n";
 
-    float end_x;
-    std::cout << "End x: ";
+    std::cout << "Goal Point x coord: ";
     std::cin >> end_x;
-    // std::cout << "\n";
 
-    float end_y;
-    std::cout << "End y: ";
+    std::cout << "Goal Point y coord: ";
     std::cin >> end_y;
     std::cout << "\n";
 
