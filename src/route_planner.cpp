@@ -50,7 +50,6 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
         open_list.emplace_back(neighbor);
         neighbor->visited = true;
     }
-
 }
 
 
@@ -61,7 +60,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 // - Remove that node from the open_list.
 // - Return the pointer.
 
-// Helper Function - Compares nodes a and b f_value
+// Helper Function - Compares nodes a and b f_values
 bool Compare(const RouteModel::Node* node_a, RouteModel::Node* node_b) {
     int f_node_a = node_a->g_value + node_a->h_value; // fa = ga + ha
     int f_node_b = node_b->g_value + node_b->h_value; // fb = gb + hb
@@ -131,5 +130,18 @@ void RoutePlanner::AStarSearch() {
     RouteModel::Node *current_node = nullptr;
 
     // TODO: Implement your solution here.
+    while(open_list.size() != 0){
+        
+        current_node = NextNode();
+
+        if (current_node->x == end_node->x && current_node->y == end_node->y){
+            auto final_path = ConstructFinalPath(current_node);
+            return;
+        }
+        else{
+            AddNeighbors(current_node);
+        }
+
+    }
 
 }
