@@ -25,7 +25,8 @@ RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, floa
 // - Node objects have a distance method to determine the distance to another node.
 
 float RoutePlanner::CalculateHValue(RouteModel::Node const *node) {
-    return node->distance(*end_node);
+    float dist = node->distance(*end_node);
+    return dist;
 }
 
 
@@ -75,6 +76,7 @@ RouteModel::Node *RoutePlanner::NextNode() {
     // Removes the lower value node and returns it
     RouteModel::Node* lowest_fval_node = RoutePlanner::open_list.back();
     RoutePlanner::open_list.pop_back();
+    lowest_fval_node->visited = true;
     return lowest_fval_node;
 }
 
@@ -130,17 +132,26 @@ void RoutePlanner::AStarSearch() {
     RouteModel::Node *current_node = nullptr;
 
     // TODO: Implement your solution here.
+    
+    // Initialize start node and add it to open list
+    current_node = start_node;
+    current_node->g_value = 0;
+    current_node->h_value = RoutePlanner::CalculateHValue(current_node);
+    open_list.emplace_back(current_node);
+
+    // Exapand nodes
     while(open_list.size() != 0){
         
         current_node = NextNode();
 
         if (current_node->x == end_node->x && current_node->y == end_node->y){
-            auto final_path = ConstructFinalPath(current_node);
+            m_Model.path = ConstructFinalPath(current_node);
             return;
         }
         else{
             AddNeighbors(current_node);
         }
+
 
     }
 
