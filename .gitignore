@@ -1,7 +1,5 @@
 *.swp
 *.o
-*.osm
-!map.osm
 draw.cpp
 test.cpp
 build/
