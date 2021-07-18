@@ -94,9 +94,28 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
     std::vector<RouteModel::Node> path_found;
 
     // TODO: Implement your solution here.
+    RouteModel::Node curr_node = *current_node;
+    path_found.push_back(curr_node);
 
+    while (curr_node.parent != nullptr){
+
+        // Distance update
+        distance += curr_node.parent->distance(curr_node);
+
+        // Move to the next one
+        curr_node = *curr_node.parent;
+        path_found.push_back(curr_node);
+    }
+
+    // Reorder
+    std::vector<RouteModel::Node> path_found_correct_order;
+    for(int i = path_found.size() - 1; i >= 0; i--){
+        path_found_correct_order.push_back(path_found[i]);
+    }
+
+    // Correct distance and return path
     distance *= m_Model.MetricScale(); // Multiply the distance by the scale of the map to get meters.
-    return path_found;
+    return path_found_correct_order;
 
 }
 
