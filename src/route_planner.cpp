@@ -1,6 +1,9 @@
 #include "route_planner.h"
 #include <algorithm>
 
+using std::sort;
+
+
 RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y): m_Model(model) {
     // Convert inputs to percentage:
     start_x *= 0.01;
@@ -58,8 +61,22 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 // - Remove that node from the open_list.
 // - Return the pointer.
 
-RouteModel::Node *RoutePlanner::NextNode() {
+// Helper Function - Compares nodes a and b f_value
+bool Compare(const RouteModel::Node* node_a, RouteModel::Node* node_b) {
+    int f_node_a = node_a->g_value + node_a->h_value; // fa = ga + ha
+    int f_node_b = node_b->g_value + node_b->h_value; // fb = gb + hb
+    return f_node_a > f_node_b; 
+}
 
+RouteModel::Node *RoutePlanner::NextNode() {
+ 
+    // Sorting open nodes
+    sort(RoutePlanner::open_list.begin(), RoutePlanner::open_list.end(), Compare);
+    
+    // Removes the lower value node and returns it
+    RouteModel::Node* lowest_fval_node = RoutePlanner::open_list.back();
+    RoutePlanner::open_list.pop_back();
+    return lowest_fval_node;
 }
 
 
